@@ -28,7 +28,23 @@
           <b-card-text
             class="mt-4 f-Roboto"
             v-html="post.excerpt ? post.excerpt.rendered : ''"
-          ></b-card-text>
+          ></b-card-text>          
+
+            <!-- <vue-instagram token="accessTokenHere" :count="5" :tags="['hashtag1', 'hashtag2']" mediaType="image">
+              <template v-slot:loading="props">
+                <h1 v-if="props.loading" class="fancy-loading">Loading, please wait...</h1>
+              </template>
+              <template v-slot:feeds="props">
+                <li class="fancy-list"> {{ props.feed.link }} </li>
+              </template>
+              <template v-slot:error="props">
+                <div class="fancy-alert"> {{ props.error.error_message }} </div>
+              </template>
+            </vue-instagram> -->
+          <div class="my-4">
+            <facebook :url="''" scale="2" class="mr-1"></facebook>
+            <twitter :url="''" scale="2" class="mr-1"></twitter>
+          </div>
 
           <NuxtLink
             :to="'/articles/' + post.slug"
@@ -51,6 +67,11 @@
 <script>
 import axios from "axios";
 import moment from "moment";
+// import VueInstagram from 'vue-instagram'
+import {
+  Facebook,
+  Twitter,
+} from "vue-socialmedia-share";
 
 export default {
   head: {
@@ -62,6 +83,10 @@ export default {
         content: "Get your head out of the sand!"
       }
     ]
+  },
+  components: {
+    Facebook,
+    Twitter,
   },
   created() {
     var self = this;
@@ -81,7 +106,8 @@ export default {
       },
       // Returned Posts in an Array
       posts: [],
-      loaded: false
+      loaded: false,
+
     };
   },
   methods: {
