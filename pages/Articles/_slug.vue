@@ -14,7 +14,7 @@
           />
 
           <b-card-title>
-            <div class="caption">
+            <div class="caption mt-2">
               {{ getPostDate(post.date) }}
             </div>
             <h2>
@@ -25,6 +25,19 @@
           <b-card-text
             v-html="post.content ? post.content.rendered : ''"
           ></b-card-text>
+          <div class="my-4">
+            <vue-goodshare-facebook
+              :page_url="$route.path"
+              title_social="Facebook"
+              has_icon
+            >
+            </vue-goodshare-facebook>
+            <vue-goodshare-twitter
+              :page_url="$route.path"
+              title_social="Twitter"
+              has_icon
+            ></vue-goodshare-twitter>
+          </div>            
 
         </b-card-body>
       </b-card>
@@ -80,6 +93,8 @@
 <script>
 import axios from "axios";
 import moment from "moment";
+import VueGoodshareFacebook from "vue-goodshare/src/providers/Facebook.vue";
+import VueGoodshareTwitter from "vue-goodshare/src/providers/Twitter.vue";
 
 export default {
   layout: "pages",
@@ -105,7 +120,10 @@ export default {
       ]
     };
   },
-
+  components: {
+    VueGoodshareFacebook,
+    VueGoodshareTwitter 
+  },
   watch: {
     "$route.params.slug": function() {
       this.getRecentPost();

@@ -19,8 +19,7 @@
     "vue-analytics": "^5.22.1",
     "vue-goodshare": "^1.5.1",
     "vue-infinite-loading": "^2.4.5",
-    "vue-pagination-2": "^3.0.6",
-    "vue-socialmedia-share": "^1.0.1"
+    "vue-pagination-2": "^3.0.6"
   },
   "devDependencies": {
     "node-sass": "^4.14.1",

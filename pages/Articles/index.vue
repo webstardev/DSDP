@@ -33,10 +33,19 @@
               v-html="post.excerpt ? post.excerpt.rendered : ''"
             ></b-card-text>          
 
-            <!-- <div class="my-4">
-              <facebook :url="''" scale="2" class="mr-1"></facebook>
-              <twitter :url="''" scale="2" class="mr-1"></twitter>
-            </div> -->
+            <div class="my-4">
+              <vue-goodshare-facebook
+                :page_url="$route.path+'/'+post.slug"
+                title_social="Facebook"
+                has_icon
+              >
+              </vue-goodshare-facebook>
+              <vue-goodshare-twitter
+                :page_url="$route.path+'/'+post.slug"
+                title_social="Twitter"
+                has_icon
+              ></vue-goodshare-twitter>
+            </div>            
 
             <NuxtLink
               :to="'/articles/' + post.slug"
@@ -65,10 +74,8 @@
 <script>
 import axios from "axios";
 import moment from "moment";
-// import {
-//   Facebook,
-//   Twitter,
-// } from "vue-socialmedia-share";
+import VueGoodshareFacebook from "vue-goodshare/src/providers/Facebook.vue";
+import VueGoodshareTwitter from "vue-goodshare/src/providers/Twitter.vue";
 
 export default {
   head: {
@@ -81,10 +88,10 @@ export default {
       }
     ]
   },
-  // components: {
-  //   Facebook,
-  //   Twitter,
-  // },
+  components: {
+    VueGoodshareFacebook,
+    VueGoodshareTwitter 
+  },
   layout: "pages",
   data() {
     return {            
