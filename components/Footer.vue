@@ -17,8 +17,6 @@
         </b-navbar-brand>
       </div>
 
-
-
       <b-navbar-nav>
         <b-nav-text>
           <NuxtLink to="/about" class="nav-link px-3">

@@ -1,62 +1,63 @@
 <template>
-  <div v-if="loaded">
+  <div v-if="!loading">
     <BannerTitle
       title="Get your head out of the sand"
       description="Stay informed and learn ways to protect your privacy"
     />
     <b-container>
       <div class="small-container">
-        <b-card v-for="(post, index) in posts" :key="index">
-          <b-card-body>
-            <b-card-title>
-              <div class="caption mb-2">
-                {{ getPostDate(post.date) }}
-              </div>
-              <h2 class="text-center">
-                <NuxtLink :to="'/articles/' + post.slug">
-                  {{ post.title.rendered }}
-                </NuxtLink>
-              </h2>
-            </b-card-title>
-          </b-card-body>
+        <template
+          v-for="(post, index) in posts"           
+        >
+          <b-card v-if="index+1 >= perPage * currentPage && index+1 <perPage * (currentPage + 1)" :key="index" >
+            <b-card-body>
+              <b-card-title>
+                <div class="caption mb-2">
+                  {{ getPostDate(post.date) }}
+                </div>
+                <h2 class="text-center">
+                  <NuxtLink :to="'/articles/' + post.slug">
+                    {{ post.title.rendered }}
+                  </NuxtLink>
+                </h2>
+              </b-card-title>
+            </b-card-body>
 
-          <b-card-img
-            img-top
-            v-if="post._embedded && post._embedded['wp:featuredmedia']"
-            :src="post._embedded['wp:featuredmedia'][0].source_url"
-          />
-          <b-card-text
-            class="mt-4 f-Roboto"
-            v-html="post.excerpt ? post.excerpt.rendered : ''"
-          ></b-card-text>          
+            <b-card-img
+              img-top
+              v-if="post._embedded && post._embedded['wp:featuredmedia']"
+              :src="post._embedded['wp:featuredmedia'][0].source_url"
+            />
+            <b-card-text
+              class="mt-4 f-Roboto"
+              v-html="post.excerpt ? post.excerpt.rendered : ''"
+            ></b-card-text>          
 
-          <div class="my-4">
-            <facebook :url="''" scale="2" class="mr-1"></facebook>
-            <twitter :url="''" scale="2" class="mr-1"></twitter>
-          </div>
+            <div class="my-4">
+              <facebook :url="''" scale="2" class="mr-1"></facebook>
+              <twitter :url="''" scale="2" class="mr-1"></twitter>
+            </div>
 
-          <NuxtLink
-            :to="'/articles/' + post.slug"
-            class="card-link btn btn-outline f-Montserrat"
-          >
-            READ MORE
-            <b-icon-arrow-right></b-icon-arrow-right>
-          </NuxtLink>
-        </b-card>
-      </div>
-      <div class="overflow-auto">
-        <b-pagination
-          v-model="currentPage"
-          :total-rows="rows"
-          :per-page="perPage"
-          aria-controls="my-table"
-        ></b-pagination>
+            <NuxtLink
+              :to="'/articles/' + post.slug"
+              class="card-link btn btn-outline f-Montserrat"
+            >
+              READ MORE
+              <b-icon-arrow-right></b-icon-arrow-right>
+            </NuxtLink>
+          </b-card>
+        </template>
       </div>
 
-      <!-- <infinite-loading @infinite="infiniteHandler">
-        <div slot="no-more"></div>
-        <div slot="no-results">No articles found</div>
-      </infinite-loading> -->
+      <div class="overflow-auto mt-5">
+        <pagination 
+          class="post-pagination"
+          :records="posts.length" 
+          v-model="currentPage" 
+          :per-page="perPage" 
+          @paginate="callbackPagniate"
+        />
+      </div>
     </b-container>
   </div>
 </template>
@@ -64,7 +65,6 @@
 <script>
 import axios from "axios";
 import moment from "moment";
-// import VueInstagram from 'vue-instagram'
 import {
   Facebook,
   Twitter,
@@ -85,62 +85,41 @@ export default {
     Facebook,
     Twitter,
   },
-  created() {
-    var self = this;
-    self.$nextTick(function() {
-      self.loaded = true;
-    });
-  },
   layout: "pages",
   data() {
     // asyncData(context) {
-    return {
-      postsUrl: "https://wp.dsdefender.com/wp-json/wp/v2/posts",
-      queryOptions: {
-        per_page: 6,
-        page: 0,
-        _embed: true
-      },
+    return {            
       // Returned Posts in an Array
       posts: [],
-      loaded: false,
-      currentPage: 0,
-      rows: 15,
-      perPage: 6
+      loading: true,
+      perPage: 3,
+      currentPage: 1,
     };
   },
   methods: {
     // Get Recent Posts From WordPress Site
-
-    infiniteHandler($state) {
-      this.queryOptions.page++;
-      this.getRecentMessages()
+    getPosts() {
+      this.loading = true;
+      axios
+        .get("https://wp.dsdefender.com/wp-json/wp/v2/posts")
         .then(response => {
-          this.posts = this.posts.concat(response.data);
-          if (response.data.length) {
-            $state.loaded();
-          } else {
-            $state.complete();
-          }
-        })
-        .catch(() => {
-          $state.complete();
-        });
-    },
-    getRecentMessages() {
-      return axios
-        .get(this.postsUrl, { params: this.queryOptions })
-        .then(response => {
-          return response;
+          this.loading = false;
+          this.posts = [ ...response.data]
         })
         .catch(error => {
-          console.log(error);
-        });
+          this.loading = false;
+        })
+    },
+    callbackPagniate: function(page) {
+      this.currentPage = page;      
     },
 
     getPostDate(date) {
       return moment(date).format("lll");
     }
+  },
+  created() {
+    this.getPosts();    
   },
   mounted() {}
 };
@@ -189,6 +168,33 @@ export default {
     .icon {
       vertical-align: middle;
     }
-  }
+  }  
 }
+.VuePagination__count {
+  display: none;
+}
+</style>
+
+<style lang="scss">
+  .post-pagination {
+    display: flex;
+    justify-content: center;  
+    .VuePagination__count {
+      display: none;
+    }      
+    .page-link {
+      color: white;
+      background-color:  #121314;
+      &.active {
+        color: #73fd05;
+      }
+    }
+    .page-item {
+      &.disabled {
+        .page-link {
+          background-color: rgb(29, 29,29);
+        }
+      }
+    }
+  }
 </style>
