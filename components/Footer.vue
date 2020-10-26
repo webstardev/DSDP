@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="footer-wrapper">
     <b-navbar type="dark" class="nav-back">
 
 <!-- hide on screens smaller than md -->
@@ -52,6 +52,9 @@
 </template>
 
 <style lang="scss" scoped>
+.footer-wrapper {
+  margin-top: auto
+}
 .footer-brand {
   flex-shrink: 0;
   display: flex;
@@ -79,10 +82,10 @@
 .nav-back {
   background: #121314;
 }
-    .nav-link {
-      font-size: 14px;
-      // font-weight: 600;
-      line-height: 20px;
-    }
+.nav-link {
+  font-size: 14px;
+  // font-weight: 600;
+  line-height: 20px;
+}
 
 </style>

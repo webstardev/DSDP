@@ -46,6 +46,9 @@ $theme-colors: (primary: $black, secondary: $gray-600, success: $green, info: $c
 
   .pages-layout {
     background: linear-gradient(0deg, #1f2022, #1f2022), #1d1d1d;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
   
   .f-Montserrat {
