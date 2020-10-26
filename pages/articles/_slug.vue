@@ -118,8 +118,6 @@ export default {
       axios
         .get(`https://wp.dsdefender.com/wp-json/wp/v2/posts?slug=${slug}`, {
           params: {
-            per_page: 4,
-            page: 1,
             context: "view",
             _embed: true
           }

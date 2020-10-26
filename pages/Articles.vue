@@ -17,7 +17,7 @@
                 </div>
                 <h2 class="text-center">
                   <NuxtLink :to="'/articles/' + post.slug">
-                    {{ post.title.rendered }}
+                    {{ `${post.title.rendered}` }}
                   </NuxtLink>
                 </h2>
               </b-card-title>
