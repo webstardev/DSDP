@@ -9,8 +9,7 @@
         <template
           v-for="(post, index) in posts"           
         >
-          {{console.log(index)}}
-          <b-card v-if="index+1 >= perPage * currentPage && index+1 <perPage * (currentPage + 1)" :key="index" >
+          <b-card v-if="index>= perPage * (currentPage-1) && index <perPage * (currentPage)" :key="index" >
             <b-card-body>
               <b-card-title>
                 <div class="caption mb-2">
@@ -34,10 +33,10 @@
               v-html="post.excerpt ? post.excerpt.rendered : ''"
             ></b-card-text>          
 
-            <div class="my-4">
+            <!-- <div class="my-4">
               <facebook :url="''" scale="2" class="mr-1"></facebook>
               <twitter :url="''" scale="2" class="mr-1"></twitter>
-            </div>
+            </div> -->
 
             <NuxtLink
               :to="'/articles/' + post.slug"
@@ -66,10 +65,10 @@
 <script>
 import axios from "axios";
 import moment from "moment";
-import {
-  Facebook,
-  Twitter,
-} from "vue-socialmedia-share";
+// import {
+//   Facebook,
+//   Twitter,
+// } from "vue-socialmedia-share";
 
 export default {
   head: {
@@ -82,15 +81,13 @@ export default {
       }
     ]
   },
-  components: {
-    Facebook,
-    Twitter,
-  },
+  // components: {
+  //   Facebook,
+  //   Twitter,
+  // },
   layout: "pages",
   data() {
-    // asyncData(context) {
     return {            
-      // Returned Posts in an Array
       posts: [],
       loading: true,
       perPage: 3,
@@ -170,9 +167,6 @@ export default {
       vertical-align: middle;
     }
   }  
-}
-.VuePagination__count {
-  display: none;
 }
 </style>
 
