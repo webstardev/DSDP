@@ -5,7 +5,7 @@
       description="Stay informed and learn ways to protect your privacy"
     />
     <div class="articles-container small-container">
-      <b-card>
+      <b-card v-if="!loading">
         <b-card-body>
           <b-card-img
             img-top
@@ -88,7 +88,8 @@ export default {
     return {
       sharing: {},
       post: {},
-      releatedPosts: []
+      releatedPosts: [],
+      loading: true
     };
   },
 
@@ -114,6 +115,7 @@ export default {
   methods: {
     // Get Recent Posts From WordPress Site
     getRecentPost() {
+      this.loading = true;
       const slug = this.$route.params.slug;
       axios
         .get(`https://wp.dsdefender.com/wp-json/wp/v2/posts?slug=${slug}`, {
@@ -123,6 +125,7 @@ export default {
           }
         })
         .then(response => {
+          this.loading = false
           this.post = response.data[0] || {};
 
           // console.log(this.post);
@@ -130,7 +133,8 @@ export default {
           this.getReleatedPost();
         })
         .catch(error => {
-          console.log(error);
+          this.loading = false;
+          console.log(error);          
         });
     },
     getReleatedPost() {
