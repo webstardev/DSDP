@@ -1,4 +1,5 @@
 import { NavbarPlugin } from "bootstrap-vue";
+import axios from 'axios';
 
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
@@ -66,5 +67,15 @@ export default {
         config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map'
       }
     }
+  },
+  generate: {
+    routes() {
+      return axios.get('https://wp.dsdefender.com/wp-json/wp/v2/posts').then(res => {
+        return res.data.map(post => {
+          return '/articles/' + post.slug
+        })
+      })
+    }
   }
+
 };
