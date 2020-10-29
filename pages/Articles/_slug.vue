@@ -184,10 +184,10 @@ export default {
       return moment(date).format("lll");
     },
     getUrlFromRoute() {    
-      debugger;
-      if (window && window.location && window.location.href) {
-        this.socialPostUrl = window.location.href
-      }
+      return 'https://github.com/whitebearcoder';
+      // if (window && window.location && window.location.href) {
+      //   this.socialPostUrl = window.location.href
+      // }
     }
 
   },
