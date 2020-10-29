@@ -26,6 +26,7 @@
             v-html="post.content ? post.content.rendered : ''"
           ></b-card-text>
           <div class="my-4">
+            {{socialPostUrl}}
             <vue-goodshare-facebook
               :page_url="socialPostUrl"
               title_social="Facebook"
@@ -186,6 +187,7 @@ export default {
     getUrlFromRoute() {    
       if (window && window.location && window.location.href) {
         this.socialPostUrl = window.location.href
+        console.log(window.location.href)
       }
     }
 
