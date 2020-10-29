@@ -134,7 +134,7 @@ export default {
     VueGoodshareReddit
   },
   watch: {
-    "$route.params.slug": function() {
+    "$route.params.id": function() {
       this.getRecentPost();
     }
   },
@@ -143,9 +143,9 @@ export default {
     // Get Recent Posts From WordPress Site
     getRecentPost() {
       this.loading = true;
-      const slug = this.$route.params.slug;
+      const id = this.$route.params.id;
       axios
-        .get(`https://wp.dsdefender.com/wp-json/wp/v2/posts?slug=${slug}`, {
+        .get(`https://wp.dsdefender.com/wp-json/wp/v2/posts?slug=${id}`, {
           params: {
             context: "view",
             _embed: true
