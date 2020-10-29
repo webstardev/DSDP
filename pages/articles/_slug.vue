@@ -28,7 +28,7 @@
           <div class="my-4">
             {{socialPostUrl}}
             <vue-goodshare-facebook
-              :page_url="socialPostUrl"
+              page_url="https://nervous-heisenberg-dcd87e.netlify.app/articles/default-search-on-android-devices"
               title_social="Facebook"
               has_icon
             >
