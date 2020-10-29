@@ -26,7 +26,6 @@
             v-html="post.content ? post.content.rendered : ''"
           ></b-card-text>
           <div class="my-4" v-if="!!socialPostUrl">
-            {{socialPostUrl}}
             <vue-goodshare-facebook
               :page_url="socialPostUrl"
               title_social="Facebook"
