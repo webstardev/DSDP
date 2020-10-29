@@ -27,21 +27,21 @@
           ></b-card-text>
           <div class="my-4">
             <vue-goodshare-facebook
-              :page_url="$route.path"
+              :page_url="socialPostUrl"
               title_social="Facebook"
               has_icon
             >
             </vue-goodshare-facebook>
-            <vue-goodshare-twitter
-              :page_url="$route.path"
+            <!-- <vue-goodshare-twitter
+              :page_url="getUrlFromRoute()"
               title_social="Twitter"
               has_icon
             ></vue-goodshare-twitter>
-                        <vue-goodshare-reddit
-              :page_url="$route.path"
+            <vue-goodshare-reddit
+              :page_url="getUrlFromRoute()"
               title_social="Reddit"
               has_icon
-            ></vue-goodshare-reddit>
+            ></vue-goodshare-reddit> -->
           </div>            
 
         </b-card-body>
@@ -111,7 +111,8 @@ export default {
       sharing: {},
       post: {},
       releatedPosts: [],
-      loading: true
+      loading: true,
+      socialPostUrl: '',
     };
   },
 
@@ -181,11 +182,19 @@ export default {
     },
     getPostDate(date) {
       return moment(date).format("lll");
+    },
+    getUrlFromRoute() {    
+      debugger;
+      if (window && window.location && window.location.href) {
+        this.socialPostUrl = window.location.href
+      }
     }
+
   },
   mounted() {
     this.getRecentPost();
     this.getReleatedPost();
+    this.getUrlFromRoute();
   }
 };
 </script>
