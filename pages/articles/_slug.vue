@@ -25,24 +25,24 @@
           <b-card-text
             v-html="post.content ? post.content.rendered : ''"
           ></b-card-text>
-          <div class="my-4">
+          <div class="my-4" v-if="!!socialPostUrl">
             {{socialPostUrl}}
             <vue-goodshare-facebook
-              page_url="https://nervous-heisenberg-dcd87e.netlify.app/articles/default-search-on-android-devices"
+              :page_url="socialPostUrl"
               title_social="Facebook"
               has_icon
             >
             </vue-goodshare-facebook>
-            <!-- <vue-goodshare-twitter
-              :page_url="getUrlFromRoute()"
+            <vue-goodshare-twitter
+              :page_url="socialPostUrl"
               title_social="Twitter"
               has_icon
             ></vue-goodshare-twitter>
             <vue-goodshare-reddit
-              :page_url="getUrlFromRoute()"
+              :page_url="socialPostUrl"
               title_social="Reddit"
               has_icon
-            ></vue-goodshare-reddit> -->
+            ></vue-goodshare-reddit>
           </div>            
 
         </b-card-body>
@@ -187,7 +187,6 @@ export default {
     getUrlFromRoute() {    
       if (window && window.location && window.location.href) {
         this.socialPostUrl = window.location.href
-        console.log(window.location.href)
       }
     }
 
