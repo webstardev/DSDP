@@ -17,7 +17,7 @@
                 </div>
                 <h2 class="text-center">
                   <NuxtLink :to="'/articles/' + post.slug">
-                    {{ `${post.title.rendered}` }}
+                    <span v-html="post.title.rendered" />
                   </NuxtLink>
                 </h2>
               </b-card-title>
@@ -31,21 +31,7 @@
             <b-card-text
               class="mt-4 f-Roboto"
               v-html="post.excerpt ? post.excerpt.rendered : ''"
-            ></b-card-text>          
-
-            <div class="my-4">
-              <vue-goodshare-facebook
-                :page_url="$route.path+'/'+post.slug"
-                title_social="Facebook"
-                has_icon
-              >
-              </vue-goodshare-facebook>
-              <vue-goodshare-twitter
-                :page_url="$route.path+'/'+post.slug"
-                title_social="Twitter"
-                has_icon
-              ></vue-goodshare-twitter>
-            </div>            
+            ></b-card-text>            
 
             <NuxtLink
               :to="'/articles/' + post.slug"

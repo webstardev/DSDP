@@ -18,7 +18,7 @@
               {{ getPostDate(post.date) }}
             </div>
             <h2>
-              {{ post.title ? post.title.rendered : "" }}
+              <span v-html="post.title ? post.title.rendered : ''" />
             </h2>
           </b-card-title>
 
@@ -37,6 +37,11 @@
               title_social="Twitter"
               has_icon
             ></vue-goodshare-twitter>
+                        <vue-goodshare-reddit
+              :page_url="$route.path"
+              title_social="Reddit"
+              has_icon
+            ></vue-goodshare-reddit>
           </div>            
 
         </b-card-body>
@@ -65,7 +70,7 @@
                   </div>
                   <h2 class="m-0">
                     <NuxtLink :to="'/articles/' + post.slug">
-                      {{ post.title ? post.title.rendered : "" }}
+                      <span v-html="post.title ? post.title.rendered : ''" />
                     </NuxtLink>
                   </h2>
                 </b-card-title>
@@ -95,6 +100,8 @@ import axios from "axios";
 import moment from "moment";
 import VueGoodshareFacebook from "vue-goodshare/src/providers/Facebook.vue";
 import VueGoodshareTwitter from "vue-goodshare/src/providers/Twitter.vue";
+import VueGoodshareReddit from "vue-goodshare/src/providers/Reddit.vue";
+
 
 export default {
   layout: "pages",
@@ -122,7 +129,8 @@ export default {
   },
   components: {
     VueGoodshareFacebook,
-    VueGoodshareTwitter 
+    VueGoodshareTwitter,
+    VueGoodshareReddit
   },
   watch: {
     "$route.params.slug": function() {

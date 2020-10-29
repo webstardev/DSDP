@@ -24,7 +24,6 @@ export default {
   plugins: [    
     { src: "./plugins/google-analytics.js", mode: "client" },
     { src: "./plugins/vue-paginate.js", ssr: true},
-    // { src: "./plugins/vue-socialmedia-share.js", ssr: false, mode: 'client'},
     ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
